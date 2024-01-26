@@ -1,7 +1,3 @@
-import React from 'react'
-
-import './App.css'
-
 const menu = {
     tacos: {
         name: "Tacos",
@@ -23,26 +19,18 @@ const menu = {
     }
 }
 
-function Home() {
+export function Home() {
     return <h1>Home</h1>
 }
 
-function About() {
+export function About() {
     return <h1>About</h1>
 }
 
-function People() {
+export function People() {
     return <h1>People</h1>
 }
 
-function Menu() {
+export function Menu() {
     return <h1>Menu</h1>
 }
-
-function App() {
-    return (
-        <Home />
-    )
-}
-
-export default App
