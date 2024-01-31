@@ -7,3 +7,7 @@ body {
 img {
     width: 300px;
 }
+
+a.active {
+  background-color: #f19090;
+}

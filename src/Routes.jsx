@@ -1,3 +1,5 @@
+import { Link, NavLink, Outlet, useParams } from 'react-router-dom'
+
 const menu = {
     tacos: {
         name: "Tacos",
@@ -20,7 +22,14 @@ const menu = {
 }
 
 export function Home() {
-    return <h1>Home</h1>
+    return (
+        <>
+            <h1>Home</h1>
+            <p><Link to="/about">About</Link></p>
+            <p><Link to="/people">People</Link></p>
+            <p><Link to="/menu">Menu</Link></p>
+        </>
+    )
 }
 
 export function About() {
@@ -33,4 +42,37 @@ export function People() {
 
 export function Menu() {
     return <h1>Menu</h1>
+}
+
+export function Root() {
+    return (
+        <>
+            <nav>
+                <ul>
+                    <li><NavLink to="/home">Home</NavLink></li>
+                    <li><NavLink to="/about">About</NavLink></li>
+                    <li><NavLink to="/people">People</NavLink></li>
+                    <li><NavLink to="/menu">Menu</NavLink></li>
+                </ul>
+            </nav>
+            <main><Outlet /></main>
+        </>
+    )
+}
+
+export function MenuItem() {
+    const params = useParams()
+    console.log("== params:", params)
+
+    const menuItem = menu[params.menuItem]
+
+    return (
+        <>
+            <h2>{menuItem.name} - ${menuItem.price}</h2>
+            <p>{menuItem.description}</p>
+            <div>
+                <img src={menuItem.image} />
+            </div>
+        </>
+    )
 }
