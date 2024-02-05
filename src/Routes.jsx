@@ -1,4 +1,11 @@
-import { Link, NavLink, Outlet, useParams } from 'react-router-dom'
+import {
+    Link,
+    NavLink,
+    Outlet,
+    useParams,
+    useSearchParams,
+    useRouteError
+} from 'react-router-dom'
 
 const menu = {
     tacos: {
@@ -33,6 +40,7 @@ export function Home() {
 }
 
 export function About() {
+    // throw new Error("about page error")
     return <h1>About</h1>
 }
 
@@ -41,28 +49,46 @@ export function People() {
 }
 
 export function Menu() {
-    return <h1>Menu</h1>
+    return (
+        <>
+            <aside>
+                <ul>
+                    {Object.keys(menu).map(item => (
+                        <li key={item}>
+                            <NavLink to={item}>{menu[item].name}</NavLink>
+                        </li>
+                    ))}
+                </ul>
+            </aside>
+            <div><Outlet /></div>
+        </>
+    )
 }
 
-export function Root() {
+export function Root(props) {
+    const { children } = props
     return (
         <>
             <nav>
                 <ul>
-                    <li><NavLink to="/home">Home</NavLink></li>
+                    <li><NavLink to="/">Home</NavLink></li>
                     <li><NavLink to="/about">About</NavLink></li>
                     <li><NavLink to="/people">People</NavLink></li>
                     <li><NavLink to="/menu">Menu</NavLink></li>
                 </ul>
             </nav>
-            <main><Outlet /></main>
+            <main>{children || <Outlet />}</main>
         </>
     )
 }
 
+// http://localhost:5173/menu/pizza?name=value&name2=value2
 export function MenuItem() {
     const params = useParams()
+    const [ searchParams, setSearchParams ] = useSearchParams()
+
     console.log("== params:", params)
+    console.log("== searchParams:", searchParams)
 
     const menuItem = menu[params.menuItem]
 
@@ -73,6 +99,21 @@ export function MenuItem() {
             <div>
                 <img src={menuItem.image} />
             </div>
+        </>
+    )
+}
+
+export function Specials() {
+    return <h1>Specials</h1>
+}
+
+export function ErrorPage() {
+    const error = useRouteError()
+    console.error(error)
+    return (
+        <>
+            <h1>Error</h1>
+            <p>{error.statusText || error.message}</p>
         </>
     )
 }
